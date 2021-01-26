@@ -1,13 +1,15 @@
 let canvas = document.getElementById("snake");
 let context = canvas.getContext("2d");
-let box = 32;
-let snake = [];
-snake[0] = {
-    x: 8 * box,
-    y: 8 * box
+let box = 36;
+let fundo = new Image();
+fundo.src = 'img/floresta-amazonica.jpg'
+let arvore = [];
+arvore[0] = {
+    x: 1 * box,
+    y: 1 * box
 }
 let direction = "right";
-let food = {
+let fogo = {
     x: Math.floor(Math.random() * 15 + 1) * box,
     y: Math.floor(Math.random() * 15 + 1) * box
 }
@@ -16,67 +18,72 @@ let food = {
 function criarBG(){
     context.fillStyle ='lightgreen';
     context.fillRect(0, 0, 16 * box, 16 * box);
+    context.drawImage(fundo, 0, 0);
+    
+    
 }
 
-function criarCobrinha(){
-    for(i=0; i < snake.length; i++){
-        context.fillStyle = 'green';
-        context.fillRect(snake[i].x, snake[i].y, box, box);
+function criarArvore(){
+    for(i=0; i < arvore.length; i++){
+        context.fillStyle = '#076907'
+        context.font='36px FontAwesome';
+        context.fillText('\uf1bb', arvore[i].x, arvore[i].y);
     }
 }
 
-function drawFood (){
-    context.fillStyle ="red";
-    context.fillRect(food.x, food.y, box, box);
+function drawFogo (){
+    context.fillStyle ='#e40000';
+    context.font = '36px FontAwesome';
+    context.fillText('\uf06d', fogo.x, fogo.y);
 }
 
 document.addEventListener('keydown', update);
 
 function update(event){
-    if(event.keyCode == 37 && direction !="right") direction = "left";
-    if(event.keyCode == 38 && direction !="down") direction = "up";
-    if(event.keyCode == 39 && direction !="left") direction = "right";
-    if(event.keyCode == 40 && direction !="up") direction = "down";
+    if(event.keyCode == 65 && direction !="right") direction = "left";
+    if(event.keyCode == 87 && direction !="down") direction = "up";
+    if(event.keyCode == 68 && direction !="left") direction = "right";
+    if(event.keyCode == 83 && direction !="up") direction = "down";
 }
 
 function iniciarJogo(){
-    if(snake[0].x > 15 * box && direction == "right") snake[0].x = 0;
-    if(snake[0].x < 0 && direction == "left") snake[0].x = 16 * box;
-    if(snake[0].y > 15 * box && direction == "down") snake[0].y = 0;
-    if(snake[0].y < 0 && direction == "up") snake[0].y = 16 * box;
+    if(arvore[0].x > 15 * box && direction == "right") arvore[0].x = 0;
+    if(arvore[0].x < 0 && direction == "left") arvore[0].x = 16 * box;
+    if(arvore[0].y > 15 * box && direction == "down") arvore[0].y = 0;
+    if(arvore[0].y < 0   && direction == "up") arvore[0].y = 16  * box;
 
-    for(i = 1; i < snake.length; i++ ){
-        if(snake[0].x == snake[i].x && snake[0].y == snake[i].y){
+    for(i = 1; i < arvore.length; i++ ){
+        if(arvore[0].x == arvore[i].x && arvore[0].y == arvore[i].y){
             clearInterval(jogo);
             alert('Game Over :(');
         }
     }
 
     criarBG();
-    criarCobrinha();
-    drawFood();
+    criarArvore();
+    drawFogo();
 
-    let snakeX = snake[0].x;
-    let snakeY = snake[0].y;
+    let arvoreX = arvore[0].x;
+    let arvoreY = arvore[0].y;
 
-    if(direction == "right") snakeX += box;
-    if(direction == "left") snakeX -= box;
-    if(direction == "up") snakeY -= box;
-    if(direction =="down") snakeY += box;
+    if(direction == "right") arvoreX += box;
+    if(direction == "left") arvoreX -= box;
+    if(direction == "up") arvoreY -= box;
+    if(direction =="down") arvoreY += box;
 
-    if(snakeX != food.x || snakeY != food.y){
-        snake.pop();
+    if(arvoreX != fogo.x || arvoreY != fogo.y){
+        arvore.pop();
 
-        }else{food.x = Math.floor(Math.random() * 15 + 1) * box;
-            food.y = Math.floor(Math.random() * 15 + 1) * box;
+        }else{fogo.x = Math.floor(Math.random() * 15 + 1) * box;
+            fogo.y = Math.floor(Math.random() * 15 + 1) * box;
         }
 
     let newHead = {
-        x: snakeX,
-        y: snakeY
+        x: arvoreX,
+        y: arvoreY
     }
 
-    snake.unshift(newHead);
+    arvore.unshift(newHead);
 }
 
-let jogo = setInterval(iniciarJogo, 100);
+let jogo = setInterval(iniciarJogo, 150);

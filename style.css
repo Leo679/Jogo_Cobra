@@ -5,5 +5,50 @@ body{
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    color:rgb(11, 126, 11);
+    color:rgb(99, 56, 0);
+   
+}
+h1{
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    width: 105vh;
+    align-self: flex-end;
+}
+
+#snake {
+    
+    border: 5px solid rgb(80, 30, 2);
+}
+
+.container {
+    margin-top: 2%;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: flex-start;
+}
+
+.instrucoes {
+    text-align: center;
+}
+
+ul {
+    text-align: center;
+    color: black;
+    padding: 10px;
+}
+
+footer {
+    margin-top: 15px;
+    text-align: center;
+}
+
+
+/*Media Queries*/
+
+@media (max-width: 1024px) {
+    .container {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        align-items: center;
+    }
 }
